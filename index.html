@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto UC - Usabilidade, Desenvolvimento Web, Mobile e Jogos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+
+<body>
+    <main style="width: 100vw; height: 100vh; position: relative; max-width: 1920px; max-height: 1080px;">
+            <h1 id = "timer" style="position: absolute; left: 5vw; top: 0vh;"></h1>
+        <div style="position: relative;">
+            <button type="button" class="btn btn-danger" id="botaoComecar" onclick="Comecar()">Clica ai</button>
+            <button type="button" class="btn btn-danger" style="display: none;" id="botao" onclick="Cronometrar()">Clica ai</button>
+        </div>
+    </main>
+</body>
+
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"
+    integrity="sha512-uKQ39gEGiyUJl4AI6L+ekBdGKpGw4xJ55+xyJG7YFlJokPNYegn9KwQ3P8A7aFQAUtUsAQHep+d/lrGqrbPIDQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    var posicao = $('#botao').position();
+    var red = 0;
+    var blue = 0;
+    var green = 0;
+
+    let horas = 0;
+    let minutos = 0;
+    let segundos = 0;
+    let milissegundos = 0;
+
+    let tamanho = 10;
+
+    function Comecar(){
+        setInterval(cronometro, 1);
+        $('#botaoComecar').hide('fast');
+        $('#botao').show('fast');
+        Cronometrar();
+    }
+
+    function Cronometrar() {      
+        
+        posicao.left = Math.random() * 1620;
+        posicao.top = Math.random() * 720;
+        
+        red = Math.random() * 255;
+        blue = Math.random() * 255;
+        green = Math.random() * 255;
+       
+        var cor = red.toString() + ',' + blue.toString() + ',' + green.toString();
+        
+        $('body').css("background-color", "rgb(" + cor + ')');
+        $('#botao').css({ top: posicao.top, left: posicao.left, position: 'absolute' });
+
+        milissegundos = 0;
+        segundos = 0;
+        minutos = 0;
+        horas = 0;
+
+        tamanho = 10;
+    }
+
+    function cronometro(){
+        milissegundos++;
+        tamanho++;
+
+        if(milissegundos > 500){
+            milissegundos = 0;
+            segundos++
+        }              
+
+        if(segundos > 59)
+        {
+            segundos = 0;
+            minutos++;
+        }
+
+        if(minutos > 59)
+        {
+            minutos = 0;
+            horas++;
+
+            if(horas < 10)
+                horas = 0 + horas;
+        }
+
+        if(tamanho > 4000)
+            tamanho = 4000;
+
+        var contador = horas.toString() + ":" + minutos.toString() + ":" + segundos.toString() + ":" + milissegundos.toString();  
+
+        $('#timer').html(contador);
+        $('#timer').css("font-size", tamanho/10);
+    }
+
+</script>
